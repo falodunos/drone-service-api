@@ -29,9 +29,8 @@ logging:
     org.springframework.cloud.sleuth: INFO
     org.springframework.web: INFO
     com.netflix.discovery.DiscoveryClient: INFO
-    com.etz.merchant: INFO
+    com.drone.manager: INFO
     org.springframework.security: INFO
-    org.keycloak: TRACE
 environment: live
 server.port: 8084
 
@@ -63,9 +62,8 @@ logging:
     org.springframework.cloud.sleuth: INFO
     org.springframework.web: INFO
     com.netflix.discovery.DiscoveryClient: INFO
-    com.etz.merchant: INFO
+    com.drone.manager: INFO
     org.springframework.security: INFO
-    org.keycloak: TRACE
 
 environment: test
 server.port: 8084
