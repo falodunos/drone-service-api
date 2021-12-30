@@ -1,0 +1,71 @@
+#Defines or set active application profile: live or development
+spring.profiles.active: test
+
+---
+
+spring:
+  profiles: live
+  application.name: DroneService
+  datasource:
+    url: jdbc:mysql://localhost:3306/droneservice_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&noAccessToProcedureBodies=true
+    username: droneservice
+    password: droneservice
+    #GRANT ALL ON merchantdb.* TO merchantuser@'%' IDENTIFIED BY 'ZLDQ[5y+SLH(L7Kv';
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties.hibernate.show_sql: false
+    properties.hibernate.use_sql_comments: true
+    properties.hibernate.format_sql: true
+    properties.hibernate.type: trace
+    hibernate.ddl-auto: update
+# spring.jpa.hibernate.ddl-auto: create-drop
+
+logging:
+  file: logs/application.log
+  file.max-size: 200MB
+  level:
+    org.apache.http: INFO
+    org.springframework.cloud.sleuth: INFO
+    org.springframework.web: INFO
+    com.netflix.discovery.DiscoveryClient: INFO
+    com.etz.merchant: INFO
+    org.springframework.security: INFO
+    org.keycloak: TRACE
+environment: live
+server.port: 8084
+
+---
+
+spring:
+  profiles: test
+  application.name: DroneService
+  datasource:
+    url: jdbc:mysql://localhost:3306/droneservice_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&noAccessToProcedureBodies=true
+    username: droneservice
+    password: droneservice
+    #GRANT ALL ON merchantdb.* TO merchantuser@'%' IDENTIFIED BY 'ZLDQ[5y+SLH(L7Kv';
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties.hibernate.show_sql: false
+    properties.hibernate.use_sql_comments: true
+    properties.hibernate.format_sql: true
+    properties.hibernate.type: trace
+    hibernate.ddl-auto: update
+# spring.jpa.hibernate.ddl-auto: create-drop
+
+logging:
+  file: logs/application.log
+  file.max-size: 200MB
+  level:
+    org.apache.http: INFO
+    org.springframework.cloud.sleuth: INFO
+    org.springframework.web: INFO
+    com.netflix.discovery.DiscoveryClient: INFO
+    com.etz.merchant: INFO
+    org.springframework.security: INFO
+    org.keycloak: TRACE
+
+environment: test
+server.port: 8084
