@@ -39,13 +39,29 @@ public class DispatchController {
      * @return ResponseEntity
      * @throws Exception
      */
-    @PostMapping(path = "/register")
-    public ResponseEntity<BaseResponse> getProducts(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+    @PostMapping(path = "/drone/register")
+    public ResponseEntity<BaseResponse> registerDrone(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
 
         BaseResponse response;
 
         return ResponseEntity.ok().body(new BaseResponse("", ""));
     }
+
+
+    /**
+     * @param request
+     * @param ucBuilder
+     * @return ResponseEntity
+     * @throws Exception
+     */
+    @PostMapping(path = "/medication/register")
+    public ResponseEntity<BaseResponse> registerMedication(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+
+        BaseResponse response;
+
+        return ResponseEntity.ok().body(new BaseResponse("", ""));
+    }
+
 
     /**
      * @param request
@@ -60,6 +76,7 @@ public class DispatchController {
 
         return ResponseEntity.ok().body(new BaseResponse("", ""));
     }
+
 
     /**
      * @param request
@@ -88,6 +105,7 @@ public class DispatchController {
 
         return ResponseEntity.ok().body(new BaseResponse("", ""));
     }
+
 
     /**
      * @param request
