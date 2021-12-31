@@ -44,14 +44,62 @@ public class DispatchController {
 
         BaseResponse response;
 
+        return ResponseEntity.ok().body(new BaseResponse("", ""));
+    }
 
-//        Merchant merchant = getMerchant(request.getMerchantId());
-//        loggerService.requestLogger(request, merchant);
-//
-//        logger.info(":: request :: {}", request.toString());
+    /**
+     * @param request
+     * @param ucBuilder
+     * @return ResponseEntity
+     * @throws Exception
+     */
+    @PostMapping(path = "/loadItems")
+    public ResponseEntity<BaseResponse> loadItems(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
 
+        BaseResponse response;
 
         return ResponseEntity.ok().body(new BaseResponse("", ""));
     }
 
+    /**
+     * @param request
+     * @param ucBuilder
+     * @return ResponseEntity
+     * @throws Exception
+     */
+    @PostMapping(path = "/getDroneByLoadedItem")
+    public ResponseEntity<BaseResponse> getDroneByLoadedItem(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+
+        BaseResponse response;
+
+        return ResponseEntity.ok().body(new BaseResponse("", ""));
+    }
+
+    /**
+     * @param request
+     * @param ucBuilder
+     * @return ResponseEntity
+     * @throws Exception
+     */
+    @PostMapping(path = "/listAvailableDrones")
+    public ResponseEntity<BaseResponse> listAvailableDrones(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+
+        BaseResponse response;
+
+        return ResponseEntity.ok().body(new BaseResponse("", ""));
+    }
+
+    /**
+     * @param request
+     * @param ucBuilder
+     * @return ResponseEntity
+     * @throws Exception
+     */
+    @PostMapping(path = "/checkBatteryLevel")
+    public ResponseEntity<BaseResponse> checkBatteryLevel(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+
+        BaseResponse response;
+
+        return ResponseEntity.ok().body(new BaseResponse("", ""));
+    }
 }
