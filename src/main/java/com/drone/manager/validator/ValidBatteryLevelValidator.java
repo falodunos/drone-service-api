@@ -11,7 +11,7 @@ class ValidBatteryLevelValidator implements ConstraintValidator<ValidBatteryLeve
     /**
      * @param constraint
      */
-    public void initialize(ValidBank constraint) {
+    public void initialize(ValidBatteryLevel constraint) {
     }
 
     /**

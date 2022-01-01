@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ValidBankValidator.class)
+@Constraint(validatedBy = ValidBatteryLevelValidator.class)
 public @interface ValidBatteryLevel {
 
     String message() default "{com.drone.battery.level.validator.message}";

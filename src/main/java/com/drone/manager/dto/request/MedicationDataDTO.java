@@ -84,7 +84,7 @@ public enum MedicationDataDTO {;
         @Value
         public static class Body implements Name, Weight, Code, Image {
             String name;
-            DroneModel weight;
+            String weight;
             String code;
             ImageDTO.Default image;
         }

@@ -73,7 +73,7 @@ public enum DroneDataDTO {;
             String serialNumber;
             DroneModel model;
             String weightLimit;
-            Double batteryCapacity;
+            String batteryCapacity;
             DroneState state;
         }
     }

@@ -1,9 +1,9 @@
 package com.drone.manager.validator;
 
-import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
 
-class ValidWeightValidator implements ConstraintValidator<ValidBank, String> {
+class ValidWeightValidator implements ConstraintValidator<ValidWeight, String> {
 
     public ValidWeightValidator() {
     }
@@ -11,7 +11,7 @@ class ValidWeightValidator implements ConstraintValidator<ValidBank, String> {
     /**
      * @param constraint
      */
-    public void initialize(ValidBank constraint) {
+    public void initialize(ValidWeight constraint) {
     }
 
     /**

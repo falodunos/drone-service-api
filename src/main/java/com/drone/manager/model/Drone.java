@@ -26,7 +26,7 @@ public class Drone extends DateAudit {
     private  String weightLimit;
 
     @Column(name = "battery_capacity", nullable = false, unique = true, columnDefinition = "varchar(10)")
-    private  String batteryCapacity;
+    private  float batteryCapacity;
 
     @Column(name = "state", nullable = false, unique = true, columnDefinition = "varchar(10)")
     private  String state;

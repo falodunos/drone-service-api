@@ -6,20 +6,16 @@ spring.profiles.active: test
 spring:
   profiles: live
   application.name: DroneService
+  h2.console.enabled: true
+
   datasource:
-    url: jdbc:mysql://localhost:3306/droneservice_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:h2:file:./data/drone-data
     username: droneservice
     password: droneservice
-    #GRANT ALL ON merchantdb.* TO merchantuser@'%' IDENTIFIED BY 'ZLDQ[5y+SLH(L7Kv';
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: org.h2.Driver
   jpa:
-    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    properties.hibernate.show_sql: false
-    properties.hibernate.use_sql_comments: true
-    properties.hibernate.format_sql: true
-    properties.hibernate.type: trace
-    hibernate.ddl-auto: update
-# spring.jpa.hibernate.ddl-auto: create-drop
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
 
 logging:
   file: logs/application.log
@@ -39,20 +35,16 @@ server.port: 8084
 spring:
   profiles: test
   application.name: DroneService
+  h2.console.enabled: true
+
   datasource:
-    url: jdbc:mysql://localhost:3306/droneservice_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:h2:file:./data/drone-data
     username: droneservice
     password: droneservice
-    #GRANT ALL ON merchantdb.* TO merchantuser@'%' IDENTIFIED BY 'ZLDQ[5y+SLH(L7Kv';
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: org.h2.Driver
   jpa:
-    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    properties.hibernate.show_sql: false
-    properties.hibernate.use_sql_comments: true
-    properties.hibernate.format_sql: true
-    properties.hibernate.type: trace
-    hibernate.ddl-auto: update
-# spring.jpa.hibernate.ddl-auto: create-drop
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
 
 logging:
   file: logs/application.log
@@ -64,6 +56,5 @@ logging:
     com.netflix.discovery.DiscoveryClient: INFO
     com.drone.manager: INFO
     org.springframework.security: INFO
-
 environment: test
 server.port: 8084

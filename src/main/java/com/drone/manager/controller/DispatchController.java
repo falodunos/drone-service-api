@@ -1,6 +1,7 @@
 package com.drone.manager.controller;
 
 import com.drone.manager.config.AppConfig;
+import com.drone.manager.dto.request.DroneDataDTO;
 import com.drone.manager.dto.response.BaseResponse;
 import com.drone.manager.service.util.LoggerService;
 import com.drone.manager.service.util.ModelMapper;
@@ -34,21 +35,28 @@ public class DispatchController {
     private static final Logger logger = LoggerFactory.getLogger(DispatchController.class);
 
     /**
+     * Registering a drone;
+     *
      * @param request
      * @param ucBuilder
      * @return ResponseEntity
      * @throws Exception
      */
     @PostMapping(path = "/drone/register")
-    public ResponseEntity<BaseResponse> registerDrone(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+    public ResponseEntity<BaseResponse> registerDrone(@Valid @RequestBody DroneDataDTO.Request.Body request, UriComponentsBuilder ucBuilder) throws Exception {
 
         BaseResponse response;
+
+        logger.info(":: Drone Registration Request :: {}", request.toString());
+
 
         return ResponseEntity.ok().body(new BaseResponse("", ""));
     }
 
 
     /**
+     * Register a medication
+     *
      * @param request
      * @param ucBuilder
      * @return ResponseEntity
@@ -64,12 +72,14 @@ public class DispatchController {
 
 
     /**
+     * loading a drone with medication items;
+     *
      * @param request
      * @param ucBuilder
      * @return ResponseEntity
      * @throws Exception
      */
-    @PostMapping(path = "/loadItems")
+    @PostMapping(path = "/loadDroneWithItems")
     public ResponseEntity<BaseResponse> loadItems(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
 
         BaseResponse response;
@@ -79,6 +89,8 @@ public class DispatchController {
 
 
     /**
+     * checking loaded medication items for a given drone;
+     *
      * @param request
      * @param ucBuilder
      * @return ResponseEntity
@@ -93,6 +105,8 @@ public class DispatchController {
     }
 
     /**
+     * checking available drones for loading;
+     *
      * @param request
      * @param ucBuilder
      * @return ResponseEntity
@@ -108,6 +122,8 @@ public class DispatchController {
 
 
     /**
+     * check drone battery level for a given drone;
+     *
      * @param request
      * @param ucBuilder
      * @return ResponseEntity
