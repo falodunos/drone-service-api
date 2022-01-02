@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConstants {
 
-    public static final String APP_CONTEXT = "/drone/api/v1/";
+    public static final String APP_CONTEXT = "/api/v1/";
 
     public interface ApiResponseMessage {
 

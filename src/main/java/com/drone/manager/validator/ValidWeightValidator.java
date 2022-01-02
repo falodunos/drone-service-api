@@ -23,11 +23,11 @@ class ValidWeightValidator implements ConstraintValidator<ValidWeight, String> {
     public boolean isValid(String weight, ConstraintValidatorContext validatorContext) {
 
         boolean isValid = false;
-        boolean isValidLenght = weight.length() == 5; // 500gr
-        boolean isValidValue = Integer.parseInt(weight.substring(0,3)) <= 500 &&
-                weight.substring(3,5).toLowerCase() == "gr";
+        boolean isValidLength = weight!= null ? weight.length() == 5 : false; // 500gr
+        boolean isValidValue = weight != null && isValidLength ? Integer.parseInt(weight.substring(0,3)) <= 500 &&
+                weight.substring(3,5).equalsIgnoreCase("gr") : false;
 
-        isValid = isValidLenght && isValidValue;
+        isValid = isValidLength && isValidValue;
 
         return isValid;
     }

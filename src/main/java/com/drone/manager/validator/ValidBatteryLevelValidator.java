@@ -22,9 +22,9 @@ class ValidBatteryLevelValidator implements ConstraintValidator<ValidBatteryLeve
     @Override
     public boolean isValid(Double batteryCapacity, ConstraintValidatorContext validatorContext) {
 
-        boolean isLessThanOrEqualToOneInPercentage = Integer.parseInt(String.valueOf(batteryCapacity)) <= 1;
-        boolean isGreaterThanOrEqualTo25Percent = (int) (batteryCapacity * 100) >= 25;
+//        boolean isLessThanOrEqualToOneInPercentage = batteryCapacity != null && Integer.parseInt(String.valueOf(batteryCapacity)) <= 1;
+        boolean isGreaterThanOrEqualTo25Percent = batteryCapacity != null && (int) (batteryCapacity * 100) >= 25;
 
-        return  isLessThanOrEqualToOneInPercentage && isGreaterThanOrEqualTo25Percent;
+        return   isGreaterThanOrEqualTo25Percent;
     }
 }

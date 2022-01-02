@@ -8,6 +8,7 @@ import com.drone.manager.validator.ValidBatteryLevel;
 import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import com.drone.manager.validator.ValidWeight;
 
@@ -50,9 +51,9 @@ public enum DroneDataDTO {;
          *
          * @return String
          */
-        @NotBlank(message = "Please provide a valid drone battery capacity")
+        @NotNull(message = "Please provide a valid drone battery capacity")
         @ValidBatteryLevel
-        String getBatteryCapacity();
+        Double getBatteryCapacity();
     }
 
     private interface State {
@@ -61,6 +62,7 @@ public enum DroneDataDTO {;
          *
          * @return DroneState
          */
+        @NotNull(message = "Please provide a valid drone state")
         @DroneStateValueSubset(anyOf = { DroneState.IDLE, DroneState.DELIVERED, DroneState.DELIVERING,
                 DroneState.LOADED, DroneState.LOADING, DroneState.RETURNING})
         DroneState getState();
@@ -73,7 +75,7 @@ public enum DroneDataDTO {;
             String serialNumber;
             DroneModel model;
             String weightLimit;
-            String batteryCapacity;
+            Double batteryCapacity;
             DroneState state;
         }
     }
