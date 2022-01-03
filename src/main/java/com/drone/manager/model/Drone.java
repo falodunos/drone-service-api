@@ -31,7 +31,6 @@ public class Drone extends DateAudit {
     @Column(name = "state", nullable = false, unique = true, columnDefinition = "varchar(10)")
     private  String state;
 
-
     @Override
     public String toString() {
         return "Drone{" +

@@ -22,7 +22,7 @@ class ValidWeightValidator implements ConstraintValidator<ValidWeight, String> {
     @Override
     public boolean isValid(String weight, ConstraintValidatorContext validatorContext) {
 
-        boolean isValid = false;
+        boolean isValid;
         boolean isValidLength = weight!= null ? weight.length() == 5 : false; // 500gr
         boolean isValidValue = weight != null && isValidLength ? Integer.parseInt(weight.substring(0,3)) <= 500 &&
                 weight.substring(3,5).equalsIgnoreCase("gr") : false;

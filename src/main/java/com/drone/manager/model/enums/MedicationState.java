@@ -1,7 +1,7 @@
 package com.drone.manager.model.enums;
 
 public enum MedicationState {
-    DISPATCHED("dispatched"), INTRANSIT("intransit"), DELIVERED("delivered");
+     DISPATCHED("dispatched"), INTRANSIT("intransit"), DELIVERED("delivered"), ;
 
     private String code;
 

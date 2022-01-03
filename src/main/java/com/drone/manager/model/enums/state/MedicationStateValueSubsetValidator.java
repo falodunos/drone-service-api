@@ -1,6 +1,5 @@
 package com.drone.manager.model.enums.state;
 
-import com.drone.manager.model.enums.DroneState;
 import com.drone.manager.model.enums.MedicationState;
 import com.drone.manager.model.enums.constraints.MedicationStateValueSubset;
 
@@ -9,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 
 public class MedicationStateValueSubsetValidator implements ConstraintValidator<MedicationStateValueSubset, MedicationState> {
-    private DroneState[] subset;
+    private MedicationState[] subset;
 
     /**
      * @param constraint
@@ -21,13 +20,13 @@ public class MedicationStateValueSubsetValidator implements ConstraintValidator<
 
 
     /**
-     * @param hasDroneState
+     * @param hasMedicationState
      * @param context
      * @return boolean
      */
     @Override
-    public boolean isValid(MedicationState hasDroneState, ConstraintValidatorContext context) {
-        return hasDroneState == null || Arrays.asList(subset)
-                .contains(hasDroneState);
+    public boolean isValid(MedicationState hasMedicationState, ConstraintValidatorContext context) {
+        return hasMedicationState == null || Arrays.asList(subset)
+                .contains(hasMedicationState);
     }
 }

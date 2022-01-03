@@ -1,7 +1,8 @@
 package com.drone.manager.model.enums.constraints;
 
-import com.drone.manager.model.enums.DroneState;
+import com.drone.manager.model.enums.MedicationState;
 import com.drone.manager.model.enums.state.DroneStateValueSubsetValidator;
+import com.drone.manager.model.enums.state.MedicationStateValueSubsetValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -16,17 +17,17 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = DroneStateValueSubsetValidator.class)
+@Constraint(validatedBy = MedicationStateValueSubsetValidator.class)
 public @interface MedicationStateValueSubset {
     /**
      * @return subset of DroneState enum
      */
-    DroneState[] anyOf();
+    MedicationState[] anyOf();
 
     /**
      * @return the error message template
      */
-    String message() default "Drone state must be any of {anyOf}";
+    String message() default "Medication state must be any of {anyOf}";
 
     /**
      * @return the groups the constraint belongs to

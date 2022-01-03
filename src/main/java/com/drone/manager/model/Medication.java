@@ -29,6 +29,9 @@ public class Medication extends DateAudit {
     @Column(name = "image", nullable = false, unique = true, columnDefinition = "varchar(255)")
     private  String image;
 
+    @Column(name = "state", nullable = false, unique = true, columnDefinition = "varchar(20)")
+    private String state;
+
     @Override
     public String toString() {
         return "Medication{" +

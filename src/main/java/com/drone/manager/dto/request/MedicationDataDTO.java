@@ -1,6 +1,7 @@
 package com.drone.manager.dto.request;
 
-import com.drone.manager.model.enums.DroneModel;
+import com.drone.manager.model.enums.MedicationState;
+import com.drone.manager.model.enums.constraints.MedicationStateValueSubset;
 import com.drone.manager.validator.ValidWeight;
 import lombok.Value;
 
@@ -79,14 +80,26 @@ public enum MedicationDataDTO {;
         }
     }
 
+    private interface State {
+        /**
+         * Drone state
+         *
+         * @return DroneState
+         */
+        @NotNull(message = "Please provide a valid medication state")
+        @MedicationStateValueSubset(anyOf = { MedicationState.DISPATCHED, MedicationState.INTRANSIT, MedicationState.DELIVERED})
+        MedicationState getState();
+    }
+
     public enum Request {
         ;
         @Value
-        public static class Body implements Name, Weight, Code, Image {
+        public static class Body implements Name, Weight, Code, Image, State {
             String name;
             String weight;
             String code;
             ImageDTO.Default image;
+            MedicationState state;
         }
     }
 }
