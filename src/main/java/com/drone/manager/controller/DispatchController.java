@@ -1,10 +1,7 @@
 package com.drone.manager.controller;
 
 import com.drone.manager.config.AppConfig;
-import com.drone.manager.dto.request.DroneDataDTO;
-import com.drone.manager.dto.request.GenerateCodeDTO;
-import com.drone.manager.dto.request.LoadItemDTO;
-import com.drone.manager.dto.request.MedicationDataDTO;
+import com.drone.manager.dto.request.*;
 import com.drone.manager.dto.response.BaseResponse;
 import com.drone.manager.model.enums.CharCase;
 import com.drone.manager.service.util.LoggerService;
@@ -105,7 +102,7 @@ public class DispatchController {
      * @return ResponseEntity
      * @throws Exception
      */
-    @PostMapping(path = "/drone/load/items")
+    @PostMapping(path = "drone/load/items")
     public ResponseEntity<BaseResponse> loadItems(@Valid @RequestBody LoadItemDTO.Request.Body request, UriComponentsBuilder ucBuilder) throws Exception {
 
         BaseResponse response;
@@ -122,8 +119,8 @@ public class DispatchController {
      * @return ResponseEntity
      * @throws Exception
      */
-    @PostMapping(path = "/getDroneByLoadedItem")
-    public ResponseEntity<BaseResponse> getDroneByLoadedItem(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+    @PostMapping(path = "drone/load/byItem")
+    public ResponseEntity<BaseResponse> getDroneByLoadedItem(@Valid @RequestBody GetDroneByItemDTO.Request.Body request, UriComponentsBuilder ucBuilder) throws Exception {
 
         BaseResponse response;
 
@@ -138,7 +135,7 @@ public class DispatchController {
      * @return ResponseEntity
      * @throws Exception
      */
-    @PostMapping(path = "/listAvailableDrones")
+    @PostMapping(path = "listAvailableDrones")
     public ResponseEntity<BaseResponse> listAvailableDrones(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
 
         BaseResponse response;

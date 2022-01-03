@@ -20,10 +20,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
 
 
     /**
-     * @param id
+     * @param medicationCode
      * @return Optional
      */
-    Optional<Transaction> findByMedicationId(String id);
+    Optional<Transaction> findByMedicationCode(String medicationCode);
 
     /**
      * @param reference
@@ -35,6 +35,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
      * @param reference
      * @return Optional
      */
-    @Query(value = "SELECT * FROM transaction t WHERE t.package_reference = ?1 AND t.medication_id = ?2", nativeQuery = true)
-    List<Transaction> findByPackageReferenceAndMedicationId(String reference, String medicationId);
+    @Query(value = "SELECT * FROM transaction t WHERE t.package_reference = ?1 AND t.medication_code = ?2", nativeQuery = true)
+    List<Transaction> findByPackageReferenceAndMedicationCode(String reference, String medicationCode);
 }

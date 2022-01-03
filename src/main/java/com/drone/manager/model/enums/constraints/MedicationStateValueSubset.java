@@ -1,7 +1,6 @@
 package com.drone.manager.model.enums.constraints;
 
 import com.drone.manager.model.enums.MedicationState;
-import com.drone.manager.model.enums.state.DroneStateValueSubsetValidator;
 import com.drone.manager.model.enums.state.MedicationStateValueSubsetValidator;
 
 import javax.validation.Constraint;

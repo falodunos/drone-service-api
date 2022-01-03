@@ -17,12 +17,12 @@ public class Transaction extends DateAudit {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "package_reference", nullable = false, unique = true, columnDefinition = "varchar(10)")
-    private Long packageReference;
+    @Column(name = "package_reference", nullable = false, unique = true, columnDefinition = "varchar(100)")
+    private String packageReference;
 
-    @Column(name = "drone_id", nullable = false, columnDefinition = "integer")
-    private Long droneId;
+    @Column(name = "drone_sn", nullable = false, columnDefinition = "varchar(100)")
+    private String droneSn;
 
-    @Column(name = "medication_id", nullable = false, columnDefinition = "integer")
-    private Long medicationId;
+    @Column(name = "medication_code", nullable = false, columnDefinition = "varchar(100)")
+    private String medicationCode;
 }
