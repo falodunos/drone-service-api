@@ -22,8 +22,7 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
 
-file:
-  upload-dir: file:///${project.basedir}/uploads
+upload-dir: file:///${project.basedir}/uploads
 
 logging:
   file: logs/application.log
@@ -59,8 +58,7 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
 
-file:
-  upload-dir: file:///${project.basedir}/uploads
+upload-dir: file:///${project.basedir}/uploads
 
 logging:
   file: logs/application.log

@@ -1,6 +1,9 @@
 package com.drone.manager.model;
 
 import com.drone.manager.model.audit.DateAudit;
+import com.drone.manager.model.enums.DroneModel;
+import com.drone.manager.model.enums.DroneState;
+import com.drone.manager.model.enums.MedicationState;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -26,11 +29,23 @@ public class Medication extends DateAudit {
     @Column(name = "code", nullable = false, unique = true, columnDefinition = "varchar(50)")
     private  String code;
 
-    @Column(name = "image", nullable = false, unique = true, columnDefinition = "varchar(255)")
-    private  String image;
+    @Column(name = "image_path", nullable = false, unique = true, columnDefinition = "varchar(255)")
+    private  String imagePath;
 
     @Column(name = "state", nullable = false, unique = true, columnDefinition = "varchar(20)")
-    private String state;
+    private MedicationState state;
+
+
+    public Medication() {
+    }
+
+    public Medication(String name, String weight, String code, String imagePath, MedicationState state) {
+        this.name = name;
+        this.weight = weight;
+        this.code = code;
+        this.imagePath = imagePath;
+        this.state = state;
+    }
 
     @Override
     public String toString() {
@@ -39,7 +54,7 @@ public class Medication extends DateAudit {
                 ", name='" + name + '\'' +
                 ", weight='" + weight + '\'' +
                 ", code='" + code + '\'' +
-                ", image='" + image + '\'' +
+                ", image='" + imagePath + '\'' +
                 '}';
     }
 }

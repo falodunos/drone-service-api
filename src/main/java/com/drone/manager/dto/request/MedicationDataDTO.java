@@ -4,6 +4,7 @@ import com.drone.manager.model.enums.MedicationState;
 import com.drone.manager.model.enums.constraints.MedicationStateValueSubset;
 import com.drone.manager.validator.ValidWeight;
 import lombok.Value;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -43,41 +44,14 @@ public enum MedicationDataDTO {;
         String getCode();
     }
 
-    private interface Image {
+    private interface ImagePath {
         /**
          * image (picture of the medication case).
          *
          * @return DroneState
          */
         @NotNull(message = "Please provide a valid image file")
-        ImageDTO.Default getImage();
-    }
-
-    public enum ImageDTO {;
-        @NotBlank(message = "Please provide a valid image file name")
-        private interface FileName {
-            String getFileName();
-        }
-        @NotBlank(message = "Please provide a valid image file upload url")
-        private interface FileDownloadUrl {
-            String getFileDownloadUrl();
-        }
-        @NotBlank(message = "Please provide a valid image file type")
-        private interface FileType {
-            String getFileType();
-        }
-        @NotBlank(message = "Please provide a valid image file size")
-        private interface Size {
-            int getSize();
-        }
-
-        @Value
-        public static class Default implements FileName, FileDownloadUrl, FileType, Size {
-            String fileName;
-            String fileDownloadUrl;
-            String fileType;
-            int size;
-        }
+        String getImagePath();
     }
 
     private interface State {
@@ -94,11 +68,11 @@ public enum MedicationDataDTO {;
     public enum Request {
         ;
         @Value
-        public static class Body implements Name, Weight, Code, Image, State {
+        public static class Body implements Name, Weight, Code, ImagePath, State {
             String name;
             String weight;
             String code;
-            ImageDTO.Default image;
+            String imagePath;
             MedicationState state;
         }
     }

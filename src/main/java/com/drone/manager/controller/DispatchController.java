@@ -3,10 +3,14 @@ package com.drone.manager.controller;
 import com.drone.manager.config.AppConfig;
 import com.drone.manager.dto.request.*;
 import com.drone.manager.dto.response.BaseResponse;
+import com.drone.manager.dto.response.UploadFileResponse;
 import com.drone.manager.exception.DuplicateUniqueIdException;
 import com.drone.manager.model.Drone;
+import com.drone.manager.model.Medication;
 import com.drone.manager.model.enums.CharCase;
 import com.drone.manager.service.DroneService;
+import com.drone.manager.service.FileStorageService;
+import com.drone.manager.service.MedicationService;
 import com.drone.manager.service.TransactionService;
 import com.drone.manager.service.util.LoggerService;
 import com.drone.manager.service.util.ModelMapper;
@@ -21,10 +25,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.drone.manager.service.util.AppConstants;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +57,12 @@ public class DispatchController {
 
     @Autowired
     TransactionService transactionService;
+
+    @Autowired
+    FileStorageService fileStorageService;
+
+    @Autowired
+    MedicationService medicationService;
 
 
     private static final Logger logger = LoggerFactory.getLogger(DispatchController.class);
@@ -96,8 +107,15 @@ public class DispatchController {
         logger.info(":: Medication Registration Request :: {}", request.toString());
 
         BaseResponse response;
+        Optional<Medication> optionalMedication = medicationService.save(request);
 
-        return ResponseEntity.ok().body(new BaseResponse("", ""));
+        if (optionalMedication.isPresent()) {
+            String medication = new Gson().toJson(optionalMedication.get());
+            response = new BaseResponse(HttpStatus.CREATED.value() + "", "Saved Successfully", medication);
+            return ResponseEntity.ok().body(response);
+        }
+
+        return ResponseEntity.unprocessableEntity().body(new BaseResponse("500", "Unknown Error Occurred"));
     }
 
     /**
@@ -197,5 +215,18 @@ public class DispatchController {
         responseObject.addProperty("batteryLevel", batteryLevel);
 
         return ResponseEntity.ok().body(new BaseResponse(HttpStatus.OK.toString(), "Successful", responseObject.toString()));
+    }
+
+    @PostMapping("/uploadFile")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
     }
 }
