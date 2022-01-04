@@ -3,21 +3,31 @@ package com.drone.manager.controller;
 import com.drone.manager.config.AppConfig;
 import com.drone.manager.dto.request.*;
 import com.drone.manager.dto.response.BaseResponse;
+import com.drone.manager.exception.DuplicateUniqueIdException;
+import com.drone.manager.model.Drone;
 import com.drone.manager.model.enums.CharCase;
+import com.drone.manager.service.DroneService;
+import com.drone.manager.service.TransactionService;
 import com.drone.manager.service.util.LoggerService;
 import com.drone.manager.service.util.ModelMapper;
 import com.drone.manager.service.util.code.CodeGenerator;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.drone.manager.service.util.AppConstants;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 @RestController
@@ -37,6 +47,12 @@ public class DispatchController {
     @Autowired
     CodeGenerator codeGenerator;
 
+    @Autowired
+    DroneService droneService;
+
+    @Autowired
+    TransactionService transactionService;
+
 
     private static final Logger logger = LoggerFactory.getLogger(DispatchController.class);
 
@@ -51,12 +67,18 @@ public class DispatchController {
     @PostMapping(path = "drone/register")
     public ResponseEntity<BaseResponse> registerDrone(@Valid @RequestBody DroneDataDTO.Request.Body request, UriComponentsBuilder ucBuilder) throws Exception {
 
-        BaseResponse response;
-
         logger.info(":: Drone Registration Request :: {}", request.toString());
 
+        BaseResponse response;
+        Optional<Drone> optionalDrone = droneService.save(request);
 
-        return ResponseEntity.ok().body(new BaseResponse("", ""));
+        if (optionalDrone.isPresent()) {
+            String drone = new Gson().toJson(optionalDrone.get());
+            response = new BaseResponse(HttpStatus.CREATED.value() + "", "Saved Successfully", drone);
+            return ResponseEntity.ok().body(response);
+        }
+
+        return ResponseEntity.unprocessableEntity().body(new BaseResponse("500", "Unknown Error Occurred"));
     }
 
 
@@ -70,6 +92,8 @@ public class DispatchController {
      */
     @PostMapping(path = "medication/register")
     public ResponseEntity<BaseResponse> registerMedication(@Valid @RequestBody MedicationDataDTO.Request.Body request, UriComponentsBuilder ucBuilder) throws Exception {
+
+        logger.info(":: Medication Registration Request :: {}", request.toString());
 
         BaseResponse response;
 
@@ -122,41 +146,56 @@ public class DispatchController {
     @PostMapping(path = "drone/load/byItem")
     public ResponseEntity<BaseResponse> getDroneByLoadedItem(@Valid @RequestBody GetDroneByItemDTO.Request.Body request, UriComponentsBuilder ucBuilder) throws Exception {
 
+        if (request.getPackageReference().equalsIgnoreCase(request.getMedicationCode()))
+            throw new DuplicateUniqueIdException("Duplicate! Package reference and medication code must be different ...");
+
         BaseResponse response;
 
-        return ResponseEntity.ok().body(new BaseResponse("", ""));
+        Drone drone = transactionService.getDroneByLoadedItem(request);
+        String droneStr = new Gson().toJson(drone);
+        response = new BaseResponse(HttpStatus.OK.value() + "", "Successful", droneStr);
+
+        return ResponseEntity.ok().body(response);
     }
 
     /**
      * checking available drones for loading;
      *
-     * @param request
-     * @param ucBuilder
      * @return ResponseEntity
      * @throws Exception
      */
-    @PostMapping(path = "listAvailableDrones")
-    public ResponseEntity<BaseResponse> listAvailableDrones(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+    @GetMapping(path = "drone/list/available")
+    public ResponseEntity<BaseResponse> listAvailableDrones() throws Exception {
 
         BaseResponse response;
+        List<Drone> droneList = droneService.findAvailableDrones();
+        String message = droneList.size() == 0? "No available drone" : "Successful";
+        response = new BaseResponse("200", message, droneList);
 
-        return ResponseEntity.ok().body(new BaseResponse("", ""));
+        return ResponseEntity.ok().body(response);
     }
 
 
     /**
      * check drone battery level for a given drone;
      *
-     * @param request
-     * @param ucBuilder
+     * @param serialNumber
      * @return ResponseEntity
      * @throws Exception
      */
-    @PostMapping(path = "/checkBatteryLevel")
-    public ResponseEntity<BaseResponse> checkBatteryLevel(@Valid @RequestBody String request, UriComponentsBuilder ucBuilder) throws Exception {
+    @GetMapping(path = "/drone/battery/level/{sn}")
+    public ResponseEntity<BaseResponse> checkBatteryLevel(@PathVariable(value = "sn") String serialNumber) throws Exception {
 
         BaseResponse response;
+        boolean isValid = serialNumber.matches("^[A-Z0-9_]*$");
+        if (!isValid) {
+            return ResponseEntity.ok().body(new BaseResponse(HttpStatus.BAD_REQUEST.value() + "", "Serial number must contain only uppercase letters, underscore (_) and numbers"));
+        }
 
-        return ResponseEntity.ok().body(new BaseResponse("", ""));
+        double batteryLevel = droneService.getDroneBatteryLevel(serialNumber);
+        JsonObject responseObject = new JsonObject();
+        responseObject.addProperty("batteryLevel", batteryLevel);
+
+        return ResponseEntity.ok().body(new BaseResponse(HttpStatus.OK.toString(), "Successful", responseObject.toString()));
     }
 }

@@ -36,5 +36,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
      * @return Optional
      */
     @Query(value = "SELECT * FROM transaction t WHERE t.package_reference = ?1 AND t.medication_code = ?2", nativeQuery = true)
-    List<Transaction> findByPackageReferenceAndMedicationCode(String reference, String medicationCode);
+    public Optional<Transaction> findByPackageReferenceAndMedicationCode(String reference, String medicationCode);
 }
