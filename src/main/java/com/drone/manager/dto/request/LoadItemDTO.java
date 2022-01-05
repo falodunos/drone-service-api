@@ -19,6 +19,16 @@ public enum LoadItemDTO {;
         String getPackageReference();
     }
 
+    private interface DroneSerialNumber {
+        /**
+         * code (allowed only upper case letters, underscore and numbers);
+         * @return String
+         */
+        @NotBlank(message = "Please provide a valid value, drone serial number cannot be empty")
+        @Pattern(regexp = "^[A-Z0-9_]*$", message = "DroneSerialNumber must contain only uppercase letters, underscore (_) and numbers")
+        String getDroneSerialNumber();
+    }
+
     private interface Items {
         /**
          * Medication Item
@@ -63,8 +73,9 @@ public enum LoadItemDTO {;
     public enum Request {
         ;
         @Value
-        public static class Body implements PackageReference, Items {
+        public static class Body implements PackageReference, DroneSerialNumber, Items {
             String packageReference;
+            String droneSerialNumber;
             List<ItemDTO.Request.Default> items;
         }
     }

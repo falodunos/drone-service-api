@@ -61,7 +61,7 @@ public enum MedicationDataDTO {;
          * @return DroneState
          */
         @NotNull(message = "Please provide a valid medication state")
-        @MedicationStateValueSubset(anyOf = { MedicationState.DISPATCHED, MedicationState.INTRANSIT, MedicationState.DELIVERED})
+        @MedicationStateValueSubset(anyOf = { MedicationState.RESTING, MedicationState.DISPATCHED, MedicationState.INTRANSIT, MedicationState.DELIVERED})
         MedicationState getState();
     }
 

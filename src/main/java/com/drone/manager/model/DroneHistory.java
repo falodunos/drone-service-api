@@ -2,7 +2,6 @@ package com.drone.manager.model;
 
 import com.drone.manager.model.audit.DateAudit;
 import com.drone.manager.model.enums.DroneModel;
-import com.drone.manager.model.enums.DroneState;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="drone")
 @EntityListeners(AuditingEntityListener.class)
-public class Drone extends DateAudit {
+public class DroneHistory extends DateAudit {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -27,21 +26,18 @@ public class Drone extends DateAudit {
     @Column(name = "weight_limit", nullable = false, columnDefinition = "varchar(20)")
     private  String weightLimit;
 
-    @Column(name = "battery_capacity", nullable = false, columnDefinition = "varchar(10)")
+    @Column(name = "battery_capacity", nullable = false,  columnDefinition = "varchar(10)")
     private  double batteryCapacity;
 
-    @Column(name = "state", nullable = false, columnDefinition = "varchar(30) default 'IDLE'")
-    DroneState state;
 
-    public Drone() {
+    public DroneHistory() {
     }
 
-    public Drone(String serialNumber, DroneModel model, String weightLimit, double batteryCapacity, DroneState state) {
+    public DroneHistory(String serialNumber, DroneModel model, String weightLimit, double batteryCapacity) {
         this.serialNumber = serialNumber;
         this.model = model;
         this.weightLimit = weightLimit;
         this.batteryCapacity = batteryCapacity;
-        this.state = state;
     }
 
     @Override
@@ -52,7 +48,6 @@ public class Drone extends DateAudit {
                 ", model='" + model + '\'' +
                 ", weightLimit='" + weightLimit + '\'' +
                 ", batteryCapacity='" + batteryCapacity + '\'' +
-                ", state='" + state + '\'' +
                 '}';
     }
 }

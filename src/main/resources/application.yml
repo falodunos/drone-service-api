@@ -14,6 +14,7 @@ spring:
     multipart.max-request-size: 215MB
 
   datasource:
+    platform: h2
     url: jdbc:h2:file:./data/drone-data
     username: droneservice
     password: droneservice
@@ -50,6 +51,7 @@ spring:
     multipart.max-request-size: 215MB
 
   datasource:
+    platform: h2
     url: jdbc:h2:file:./data/drone-data
     username: droneservice
     password: droneservice

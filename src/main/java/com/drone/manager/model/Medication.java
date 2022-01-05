@@ -23,16 +23,16 @@ public class Medication extends DateAudit {
     @Column(name = "name", nullable = false, columnDefinition = "varchar(100)")
     private  String name;
 
-    @Column(name = "weight", nullable = false, unique = true, columnDefinition = "varchar(10)")
+    @Column(name = "weight", nullable = false, columnDefinition = "varchar(10)")
     private  String weight;
 
     @Column(name = "code", nullable = false, unique = true, columnDefinition = "varchar(50)")
     private  String code;
 
-    @Column(name = "image_path", nullable = false, unique = true, columnDefinition = "varchar(255)")
+    @Column(name = "image_path", nullable = false, columnDefinition = "varchar(255)")
     private  String imagePath;
 
-    @Column(name = "state", nullable = false, unique = true, columnDefinition = "varchar(20)")
+    @Column(name = "state", nullable = false, columnDefinition = "varchar(20) default 'RESTING'")
     private MedicationState state;
 
 

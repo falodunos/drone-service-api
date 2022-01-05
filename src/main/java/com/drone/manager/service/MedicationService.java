@@ -3,6 +3,7 @@ package com.drone.manager.service;
 import com.drone.manager.dto.request.MedicationDataDTO;
 import com.drone.manager.exception.DuplicateUniqueIdException;
 import com.drone.manager.model.Medication;
+import com.drone.manager.model.enums.MedicationState;
 import com.drone.manager.repository.MedicationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class MedicationService extends BaseService {
         Optional<Medication> optionalMedication = this.medicationRepository.findByCode(request.getCode());
 
         if (!optionalMedication.isPresent()) {
-            Medication medication = new Medication(request.getName(), request.getWeight(), request.getCode(), request.getImagePath(), request.getState());
+            Medication medication = new Medication(request.getName(), request.getWeight(), request.getCode(), request.getImagePath(), MedicationState.RESTING);
 
             medication = this.medicationRepository.save(medication);
             return Optional.of(medication);

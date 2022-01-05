@@ -17,7 +17,7 @@ public class Transaction extends DateAudit {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "package_reference", nullable = false, unique = true, columnDefinition = "varchar(100)")
+    @Column(name = "package_reference", nullable = false, unique = false, columnDefinition = "varchar(100)")
     private String packageReference;
 
     @Column(name = "drone_sn", nullable = false, columnDefinition = "varchar(100)")

@@ -68,6 +68,7 @@ public class DroneService extends BaseService {
      * @return List<Drone>
      */
     public List<Drone> findAvailableDrones() {
+
         return this.droneRepository.findAvailableDrones();
     }
 
@@ -99,4 +100,5 @@ public class DroneService extends BaseService {
 
         throw new MissingEntityException("Drone With Serial Number '" + sn + "' Not Found!");
     }
+
 }

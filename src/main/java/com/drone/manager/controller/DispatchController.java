@@ -31,6 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,7 +90,8 @@ public class DispatchController {
             return ResponseEntity.ok().body(response);
         }
 
-        return ResponseEntity.unprocessableEntity().body(new BaseResponse("500", "Unknown Error Occurred"));
+        return ResponseEntity.unprocessableEntity().body(
+                new BaseResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(), "Unknown Error Occurred"));
     }
 
 
@@ -115,7 +117,8 @@ public class DispatchController {
             return ResponseEntity.ok().body(response);
         }
 
-        return ResponseEntity.unprocessableEntity().body(new BaseResponse("500", "Unknown Error Occurred"));
+        return ResponseEntity.unprocessableEntity().body(
+                new BaseResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(), "Unknown Error Occurred"));
     }
 
     /**
@@ -133,7 +136,7 @@ public class DispatchController {
         ArrayList<String> codes = new ArrayList<>();
         for (int i = 0; i < request.getCodeCount(); i++)
             codes.add(codeGenerator.generate(CharCase.UPPER_CASE, request.getCodeLength()));
-        return ResponseEntity.ok().body(new BaseResponse("200","success", codes));
+        return ResponseEntity.ok().body(new BaseResponse(HttpStatus.OK.value() + "","Successful", codes));
     }
 
     /**
@@ -149,7 +152,14 @@ public class DispatchController {
 
         BaseResponse response;
 
-        return ResponseEntity.ok().body(new BaseResponse("", ""));
+        List<Long> transIds = transactionService.loadDroneWithItems(request);
+
+        if (transIds.size() == request.getItems().size()) {
+            return  ResponseEntity.ok().body(new BaseResponse(HttpStatus.OK.value() + "","Successful", transIds));
+        }
+
+        return ResponseEntity.unprocessableEntity().body(
+                new BaseResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(), "Unknown Error Occurred"));
     }
 
 
@@ -187,6 +197,7 @@ public class DispatchController {
 
         BaseResponse response;
         List<Drone> droneList = droneService.findAvailableDrones();
+        logger.info(":: droneList :: {}", Arrays.toString(droneList.toArray()));
         String message = droneList.size() == 0? "No available drone" : "Successful";
         response = new BaseResponse("200", message, droneList);
 
@@ -218,7 +229,7 @@ public class DispatchController {
     }
 
     @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<BaseResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -226,7 +237,8 @@ public class DispatchController {
                 .path(fileName)
                 .toUriString();
 
-        return new UploadFileResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+        UploadFileResponse uploadFileResponse = new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+
+        return ResponseEntity.ok().body(new BaseResponse(HttpStatus.OK.toString(), "Successful", uploadFileResponse));
     }
 }
