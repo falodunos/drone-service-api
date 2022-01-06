@@ -134,7 +134,7 @@ available if its state is `IDLE`.
 
 - **Check Drone Battery Level API** : Helps to get a drone battery level using the drone serial number.
 
-- **SCREENSHOTS FOLDER** :  The folder `screen-shots` screenshots of the tested endpoints from Postman.
+- **SCREENSHOTS FOLDER** :  The folder `drone-service-api-screenshots` screenshots of the tested endpoints from Postman.
 
 - **DUMPED SQL DATA** : A MySQL dump of the database records is stored `droneservicedb.sql` at the project 
 root's folder
