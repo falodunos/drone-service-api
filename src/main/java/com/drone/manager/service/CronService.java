@@ -27,7 +27,7 @@ public class CronService {
     public void scheduleFixedRateWithInitialDelayTask() throws ExecutionException, InterruptedException {
 
         List<Drone> drones = this.droneService.findAllDrones(); // get all services
-        checkBatteryLevel(drones); // test if services are active or inactive
+        checkBatteryLevel(drones); // checked drone battery level
         long now = System.currentTimeMillis() / 1000;
         System.out.println("Fixed rate task with one second initial delay - " + now);
     }

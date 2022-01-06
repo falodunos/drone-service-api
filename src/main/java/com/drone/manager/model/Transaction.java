@@ -25,4 +25,14 @@ public class Transaction extends DateAudit {
 
     @Column(name = "medication_code", nullable = false, columnDefinition = "varchar(100)")
     private String medicationCode;
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "Id=" + Id +
+                ", packageReference='" + packageReference + '\'' +
+                ", droneSn='" + droneSn + '\'' +
+                ", medicationCode='" + medicationCode + '\'' +
+                '}';
+    }
 }

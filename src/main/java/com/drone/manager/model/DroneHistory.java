@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="drone")
+@Table(name="drone_history")
 @EntityListeners(AuditingEntityListener.class)
 public class DroneHistory extends DateAudit {
 

@@ -1,27 +1,28 @@
 #Defines or set active application profile: live or development
-spring.profiles.active: test
+spring.profiles.active: mysqldb
 
 ---
 
 spring:
-  profiles: live
+  profiles: mysqldb
   application.name: DroneService
-  h2.console.enabled: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/droneservicedb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false&noAccessToProcedureBodies=true
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties.hibernate.show_sql: false
+    properties.hibernate.use_sql_comments: true
+    properties.hibernate.format_sql: true
+    properties.hibernate.type: trace
+    hibernate.ddl-auto: update
   servlet:
     multipart.enabled: true
     multipart.file-size-threshold: 2KB
     multipart.max-file-size: 200MB
     multipart.max-request-size: 215MB
-
-  datasource:
-    platform: h2
-    url: jdbc:h2:file:./data/drone-data
-    username: droneservice
-    password: droneservice
-    driverClassName: org.h2.Driver
-  jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
 
 upload-dir: file:///${project.basedir}/uploads
 
@@ -35,13 +36,12 @@ logging:
     com.netflix.discovery.DiscoveryClient: INFO
     com.drone.manager: INFO
     org.springframework.security: INFO
-environment: live
 server.port: 8084
 
 ---
 
 spring:
-  profiles: test
+  profiles: filedb
   application.name: DroneService
   h2.console.enabled: true
   servlet:
@@ -72,5 +72,4 @@ logging:
     com.netflix.discovery.DiscoveryClient: INFO
     com.drone.manager: INFO
     org.springframework.security: INFO
-environment: test
 server.port: 8084

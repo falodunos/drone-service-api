@@ -1,7 +1,9 @@
 package com.drone.manager.service.util.code;
 
+import com.drone.manager.model.Drone;
 import com.drone.manager.model.Medication;
 import com.drone.manager.model.enums.CharCase;
+import com.drone.manager.service.DroneService;
 import com.drone.manager.service.MedicationService;
 import com.drone.manager.service.util.code.adapter.AdapterAbstract;
 import com.drone.manager.service.util.code.adapter.Alphanumeric;
@@ -18,6 +20,9 @@ public class CodeGenerator {
     @Autowired
     MedicationService medicationService;
 
+    @Autowired
+    DroneService droneService;
+
     protected AdapterAbstract adapter;
 
     public CodeGenerator() {
@@ -31,9 +36,11 @@ public class CodeGenerator {
             this.getAdapter().setCharCase(charCase);
             this.getAdapter().setCodeLength(codeLength);
             code = this.getAdapter().generate();
-            Optional<Medication> optional = medicationService.getMedicationByCode(code);
 
-            if (!optional.isPresent()) {
+            Optional<Medication> optionalMedication = medicationService.getMedicationByCode(code);
+            Optional<Drone> optionalDrone = droneService.getDroneBySerialNumber(code);
+
+            if (!optionalMedication.isPresent() && !optionalDrone.isPresent()) {
                 isExisting = false;
             }
         } while (isExisting);
